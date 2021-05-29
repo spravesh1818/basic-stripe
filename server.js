@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv').config();
 const path = require('path');
-const stripe = require('stripe')('sk_test_51Dqj8EFnnCplz1H9aGOgVo7ZhL8ToDAThO0jQFWwUNMGuxMCqgn2dmJKKMHfcLujlVOcPvPp3CgCjnZDffolOA9c00NjbTbzws'); // Add your Secret Key Here
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`); // Add your Secret Key Here
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(express.static(path.join(__dirname, './views')));
 
 // Future Code Goes Here
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT||3000;
 
 
 app.post("/charge", (req, res) => {
@@ -42,4 +43,6 @@ app.post("/charge", (req, res) => {
 });
 
 
-app.listen(port, () => console.log('Server is running...'));
+app.listen(port, () => console.log(`Server is running on port:${port}`));
+
+module.exports.env=dotenv;
